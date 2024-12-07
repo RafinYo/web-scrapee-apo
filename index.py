@@ -3,12 +3,11 @@ import requests
 
 app = Flask(__name__)
 
-@app.route('/api/scraper', methods=['POST'])
+@app.route('/api/source', methods=['POST'])
 def get_source_code():
     try:
         data = request.get_json()
         url = data.get('url')
-
         if not url:
             return jsonify({'error': 'URL is required'}), 400
 
@@ -17,10 +16,8 @@ def get_source_code():
             return jsonify({'error': 'Failed to fetch the webpage'}), response.status_code
 
         return jsonify({'source_code': response.text})
-
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
-# Export the app for Vercel
 if __name__ == "__main__":
     app.run()
