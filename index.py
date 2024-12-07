@@ -3,7 +3,7 @@ import requests
 
 app = Flask(__name__)
 
-@app.route('/api/source', methods=['POST'])
+@app.route('/api/scraper', methods=['POST'])
 def get_source_code():
     try:
         data = request.get_json()
