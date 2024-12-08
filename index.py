@@ -1,23 +1,29 @@
 from flask import Flask, request, jsonify
-import requests
+import google.generativeai as genai
 
+# Initialize Flask app
 app = Flask(__name__)
 
-@app.route('/api/source', methods=['POST'])
-def get_source_code():
+# Initialize the Google Generative AI API (Make sure your API key and credentials are set)
+genai.configure(api_key="AIzaSyDGcFCXeK16YC6tgAVDGZN3Vpkdg4cl5Yo")
+
+@app.route('/chat', methods=['GET'])
+def chat():
+    user_input = request.args.get("message")  # Extract message from the query parameter
+    
+    if not user_input:
+        return jsonify({"error": "No message provided"}), 400
+
     try:
-        data = request.get_json()
-        url = data.get('url')
-        if not url:
-            return jsonify({'error': 'URL is required'}), 400
-
-        response = requests.get(url)
-        if response.status_code != 200:
-            return jsonify({'error': 'Failed to fetch the webpage'}), response.status_code
-
-        return jsonify({'source_code': response.text})
+        # Generate a response using Google's Generative AI
+        response = genai.chat(messages=[{'role': 'user', 'content': user_input}])
+        
+        # Return the response from the AI
+        return jsonify({"response": response.result['text']})
+    
     except Exception as e:
-        return jsonify({'error': str(e)}), 500
+        return jsonify({"error": str(e)}), 500
 
-if __name__ == "__main__":
-    app.run()
+
+if __name__ == '__main__':
+    app.run(debug=True)
