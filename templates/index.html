@@ -7,11 +7,10 @@
 <body>
     <h1>Chat with the AI</h1>
     <form action="/chat" method="post">
-        <input type="text" name="message" placeholder="Enter your message">
-        <button type="submit">Send</button>
+        <input type="text" id="message-input" name="message" placeholder="Enter your message">
+        <button type="submit" onclick="sendMessage()">Send</button>
     </form>
-    <div id="chat-history"></div>  <script>
-        // Use JavaScript (e.g., with AJAX) to send the user's message to the `/chat` endpoint and update the chat history with the AI's response
-    </script>
+    <div id="chat-history"></div>
+    <script src="index.js"></script>
 </body>
 </html>
