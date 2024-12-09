@@ -1,4 +1,4 @@
 Flask
 requests
-google-generative-ai
+google-ai-generativelanguage
 Flask-Render
